@@ -1,0 +1,123 @@
+body {
+    background: linear-gradient(135deg, #6f4e37 0%, #3e2723 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.register-container {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 20px;
+    padding: 40px;
+    width: 450px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.register-container .logo {
+    font-size: 36px;
+    color: #6f4e37;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: bold;
+    letter-spacing: 2px;
+}
+
+.register-container .logo span {
+    color: #d4a762;
+}
+
+.register-form {
+    margin-top: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.register-container label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.register-container input[type="text"],
+.register-container input[type="password"],
+.register-container input[type="email"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.register-container input[type="text"]:focus,
+.register-container input[type="password"]:focus,
+.register-container input[type="email"]:focus {
+    border-color: #6f4e37;
+    outline: none;
+}
+
+.btn-register {
+    background: linear-gradient(135deg, #6f4e37 0%, #8b6b4d 100%);
+    color: white;
+    border: none;
+    padding: 15px;
+    width: 100%;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin-top: 10px;
+}
+
+.btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(111, 78, 55, 0.4);
+}
+
+.login-link {
+    text-align: center;
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
+}
+
+.login-link a {
+    color: #6f4e37;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.login-link a:hover {
+    color: #d4a762;
+    text-decoration: underline;
+}
+
+.coffee-icon {
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #6f4e37;
+}
+
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row .form-group {
+    flex: 1;
+}
+
+.requirements {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+    margin-left: 5px;
+}

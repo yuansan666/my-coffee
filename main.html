@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star咖啡商城 - 首页</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* 统一商品图片容器样式 */
+        .product-img {
+            height: 200px;
+            background: linear-gradient(135deg, #6f4e37, #8b6b4d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 40px;
+            overflow: hidden; /* 隐藏超出部分 */
+        }
+        
+        /* 所有商品图片统一样式 */
+        .product-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* 保持比例填充容器，不变形 */
+            object-position: center; /* 图片居中显示 */
+        }
+        
+        .product-info {
+            padding: 15px;
+        }
+        
+        .product-title {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+            height: 40px;
+            overflow: hidden;
+        }
+        
+        .product-price {
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        
+        .product-price del {
+            color: #999;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+        
+        .product-sales {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        /* 轮播图样式优化 */
+        .carousel-item > div {
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部快捷栏 -->
+    <div class="top-shortcut">
+        <div class="shortcut-container">
+            <ul class="shortcut-links">
+                <li id="loginbar">
+                    <span id="loginuser">您好，请</span>
+                    <a href="index.html">[登录]</a>
+                    <a href="register.html">[免费注册]</a>
+                </li>
+                <li><a href="shopping-cart.html">购物车</a></li>
+                <li><a href="#">客户服务</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="main.html" class="logo">Star<span>咖啡商城</span></a>
+            
+            <ul class="nav-menu">
+                <li class="active"><a href="main.html">首页</a></li>
+                <li><a href="products.html">商品分类</a></li>
+
+                <li><a href="shopping-cart.html">购物车</a></li>
+                <li><a href="about.html">关于我们</a></li>
+            </ul>
+            
+            <div class="user-actions" id="userActions">
+                <!-- 这里的内容将由JavaScript动态生成 -->
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 搜索栏 -->
+    <div class="search-container">
+        <div class="search-content">
+            <div style="flex: 1; position: relative;">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索咖啡、咖啡豆、咖啡机...">
+                    <button onclick="performSearch()">搜索</button>
+                </div>
+                <!-- 搜索建议下拉框 -->
+                <div id="searchSuggestions" class="search-suggestions"></div>
+                <div class="hot-words">
+                    <span>热门搜索：</span>
+                    <a href="javascript:void(0)" onclick="searchHotWord('白咖啡')">白咖啡</a>
+                    <a href="javascript:void(0)" onclick="searchHotWord('咖啡豆')">咖啡豆</a>
+                    <a href="javascript:void(0)" onclick="searchHotWord('咖啡机')">咖啡机</a>
+                    <a href="javascript:void(0)" onclick="searchHotWord('咖啡杯')">咖啡杯</a>
+                </div>
+            </div>
+            <div>
+                <a href="shopping-cart.html" style="text-decoration: none; color: #6f4e37; font-weight: bold;">
+                    🛒 购物车 <span id="cartCount" style="color: #e74c3c;">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- 搜索结果弹窗 -->
+    <div id="searchResultsModal" class="search-results-modal">
+        <div class="search-results-content">
+            <div class="search-results-header">
+                <h3>搜索结果</h3>
+                <button class="close-btn" onclick="closeSearchResults()">&times;</button>
+            </div>
+            <div id="searchResultsList" class="search-results-list"></div>
+            <div class="search-results-footer">
+                <button class="btn btn-secondary" onclick="closeSearchResults()">关闭</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 主要内容 -->
+    <div class="container mt-4">
+        <!-- 轮播图 -->
+        <div id="carouselExample" class="carousel slide mb-4">
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <div style="background: linear-gradient(135deg, #6f4e37, #8b6b4d); height: 400px; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">
+                        ☕ Star咖啡特卖
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div style="background: linear-gradient(135deg, #8b6b4d, #a1887f); height: 400px; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">
+                        🎁 限时优惠
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div style="background: linear-gradient(135deg, #a1887f, #bcaaa4); height: 400px; display: flex; align-items: center; justify-content: center; color: white; font-size: 48px;">
+                        ✨ 新品上市
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        
+        <!-- 分类导航 -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">咖啡豆</h5>
+                        <p class="card-text">精选全球优质咖啡豆</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">速溶咖啡</h5>
+                        <p class="card-text">方便快捷，香醇依旧</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">咖啡器具</h5>
+                        <p class="card-text">专业工具，提升体验</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card h-100">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">咖啡礼盒</h5>
+                        <p class="card-text">送礼佳品，心意之选</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 热卖商品 -->
+        <h2 class="mb-3" style="color: #6f4e37; border-bottom: 2px solid #d4a762; padding-bottom: 10px;">热卖商品</h2>
+        <div class="row">
+            <!-- 商品1 - 1.jpg -->
+            <div class="col-md-3 mb-4">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/G7.jpg" alt="越南中原G7速溶咖啡800g">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">越南中原G7速溶咖啡800g</div>
+                        <div class="product-price">¥33.99 <del>¥46.90</del></div>
+                        <div class="product-sales">已售出 360089 件</div>
+
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商品2 - 2.jpg -->
+            <div class="col-md-3 mb-4">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/mty.png" alt="新加坡OWL猫头鹰速溶咖啡900g">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">新加坡OWL猫头鹰速溶咖啡900g</div>
+                        <div class="product-price">¥32.99 <del>¥45.00</del></div>
+                        <div class="product-sales">已售出 366699 件</div>
+                      
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商品3 - 3.jpg -->
+            <div class="col-md-3 mb-4">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/zb.png" alt="马来西亚泽合白咖啡600g">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">马来西亚泽合白咖啡600g</div>
+                        <div class="product-price">¥63.00 <del>¥75.00</del></div>
+                        <div class="product-sales">已售出 24212 件</div>
+                       
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商品4 - 4.jpg -->
+            <div class="col-md-3 mb-4">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/kkf.png" alt="马来西亚进口可可粉500g">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">马来西亚进口可可粉500g</div>
+                        <div class="product-price">¥29.99 <del>¥39.99</del></div>
+                        <div class="product-sales">已售出 18619 件</div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 更多商品 -->
+        <div class="row">
+            <!-- 商品5 - 5.jpg -->
+            <div class="col-md-3 mb-4">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/yeye.png" alt="新加坡爷爷咖啡1000g">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">新加坡爷爷咖啡1000g</div>
+                        <div class="product-price">¥39.99 <del>¥49.99</del></div>
+                        <div class="product-sales">已售出 14321 件</div>
+                      
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商品6 - 6.jpg -->
+            <div class="col-md-3 mb-4">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/jjc.png" alt="旧街场白咖啡640g">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">旧街场白咖啡640g</div>
+                        <div class="product-price">¥41.99 <del>¥55.00</del></div>
+                        <div class="product-sales">已售出 4598 件</div>
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商品7 - 7.jpg -->
+            <div class="col-md-3 mb-4">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/mtydz.png" alt="猫头鹰低脂速溶咖啡900g">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">猫头鹰低脂速溶咖啡900g</div>
+                        <div class="product-price">¥42.59 <del>¥52.59</del></div>
+                        <div class="product-sales">已售出 1714 件</div>
+                       
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 商品8 - 8.jpg -->
+            <div class="col-md-3 mb-4">
+                <div class="product-card">
+                    <div class="product-img">
+                        <img src="img/bg.png" alt="比利时焦糖饼干礼盒312g">
+                    </div>
+                    <div class="product-info">
+                        <div class="product-title">比利时焦糖饼干礼盒312g</div>
+                        <div class="product-price">¥43.99 <del>¥55.00</del></div>
+                        <div class="product-sales">已售出 1647 件</div>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <p style="text-align: center; font-size: 20px; margin-bottom: 20px;">Star咖啡商城 - 品味每一刻的香醇</p>
+            <div class="footer-links">
+                <a href="main.html">首页</a>
+                <a href="about.html">关于我们</a>
+                <a href="contact.html">联系我们</a>
+                <a href="privacy.html">隐私政策</a>
+                <a href="terms.html">服务条款</a>
+                <a href="help.html">帮助中心</a>
+            </div>
+            <div class="copyright">
+                <p>© 2023 Star咖啡商城 版权所有 | 咖啡爱好者的首选购物平台</p>
+                <p style="font-size: 12px; margin-top: 10px;">本网站仅用于学习展示，非实际电商平台</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- 引入购物车功能 -->
+    <script src="js/cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+    // 页面加载时初始化购物车
+    window.addEventListener('DOMContentLoaded', function() {
+        window.loadCart();
+        window.updateCartCount();
+    });
+    
+    // 添加搜索相关样式
+    const style = document.createElement('style');
+    style.textContent = `
+        /* 搜索建议下拉框样式 */
+        .search-suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 300px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 0 0 5px 5px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            z-index: 1000;
+            display: none;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        
+        .search-suggestions .suggestion-item {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .search-suggestions .suggestion-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        /* 搜索结果弹窗样式 */
+        .search-results-modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+        
+        .search-results-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 0;
+            border: 1px solid #888;
+            border-radius: 10px;
+            width: 80%;
+            max-width: 1200px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .search-results-header {
+            padding: 20px;
+            background-color: #f8f9fa;
+            border-bottom: 1px solid #dee2e6;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .search-results-header h3 {
+            margin: 0;
+            color: #333;
+        }
+        
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+        }
+        
+        .close-btn:hover {
+            color: #333;
+        }
+        
+        .search-results-list {
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .search-result-item {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 15px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .search-result-item:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .search-result-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-bottom: 10px;
+        }
+        
+        .search-result-item .product-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+            font-size: 16px;
+        }
+        
+        .search-result-item .product-price {
+            color: #e74c3c;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .search-result-item .product-category {
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .search-results-footer {
+            padding: 20px;
+            text-align: center;
+            border-top: 1px solid #dee2e6;
+            background-color: #f8f9fa;
+            border-radius: 0 0 10px 10px;
+        }
+    `;
+    document.head.appendChild(style);
+
+    // main.html 特定的购物车功能
+    function addProductToCart(productId, productName, productPrice, productImage) {
+        // 调用cart.js中的addToCart函数
+        window.addToCart(productId, productName, productPrice, productImage);
+    }
+    
+    // 商品数据（从products.js中提取）
+    const products = [
+        { id: 'g1', name: '越南中原G7速溶咖啡800g', price: 33.99, category: '速溶咖啡', image: 'img/G7.jpg' },
+        { id: 'g2', name: '新加坡OWL猫头鹰速溶咖啡900g', price: 32.99, category: '速溶咖啡', image: 'img/mty.png' },
+        { id: 'g3', name: '马来西亚泽合白咖啡600g', price: 63.00, category: '速溶咖啡', image: 'img/zb.png' },
+        { id: 'g4', name: '马来西亚进口可可粉500g', price: 29.99, category: '咖啡粉', image: 'img/kkf.png' },
+        { id: 'g5', name: '新加坡爷爷咖啡1000g', price: 39.99, category: '速溶咖啡', image: 'img/yeye.png' },
+        { id: 'g6', name: '旧街场白咖啡640g', price: 41.99, category: '速溶咖啡', image: 'img/jjc.png' },
+        { id: 'g7', name: '猫头鹰低脂速溶咖啡900g', price: 42.59, category: '速溶咖啡', image: 'img/mtydz.png' },
+        { id: 'g8', name: '比利时焦糖饼干礼盒312g', price: 43.99, category: '咖啡伴侣', image: 'img/bg.png' }
+    ];
+
+    // 搜索功能
+    function performSearch() {
+        const searchInput = document.getElementById('searchInput');
+        const searchTerm = searchInput.value.trim();
+        
+        if (searchTerm) {
+            // 执行搜索
+            const results = searchProducts(searchTerm);
+            displaySearchResults(searchTerm, results);
+        } else {
+            alert('请输入搜索内容！');
+        }
+    }
+    
+    // 搜索商品函数
+    function searchProducts(searchTerm) {
+        const lowerCaseTerm = searchTerm.toLowerCase();
+        return products.filter(product => {
+            return (
+                product.name.toLowerCase().includes(lowerCaseTerm) ||
+                product.category.toLowerCase().includes(lowerCaseTerm)
+            );
+        });
+    }
+    
+    // 显示搜索结果
+    function displaySearchResults(query, results) {
+        const resultsList = document.getElementById('searchResultsList');
+        const modal = document.getElementById('searchResultsModal');
+        
+        // 清空之前的结果
+        resultsList.innerHTML = '';
+        
+        if (results.length === 0) {
+            resultsList.innerHTML = '<p style="text-align: center; grid-column: 1 / -1;">没有找到匹配的商品</p>';
+        } else {
+            results.forEach(product => {
+                const productItem = document.createElement('div');
+                productItem.className = 'search-result-item';
+                productItem.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-price">¥${product.price}</div>
+                    <div class="product-category">${product.category}</div>
+                `;
+                productItem.addEventListener('click', function() {
+                    // 点击商品可以跳转到商品详情页
+                    // window.location.href = `goods-detail.html?id=${product.id}`;
+                    alert(`查看商品详情：${product.name}`);
+                    closeSearchResults();
+                });
+                resultsList.appendChild(productItem);
+            });
+        }
+        
+        // 显示弹窗
+        modal.style.display = 'block';
+        
+        // 隐藏搜索建议
+        document.getElementById('searchSuggestions').style.display = 'none';
+    }
+    
+    // 关闭搜索结果弹窗
+    function closeSearchResults() {
+        document.getElementById('searchResultsModal').style.display = 'none';
+    }
+    
+    // 点击热门搜索词
+    function searchHotWord(word) {
+        const searchInput = document.getElementById('searchInput');
+        searchInput.value = word;
+        performSearch();
+    }
+    
+    // 添加回车键搜索支持
+    document.getElementById('searchInput').addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            performSearch();
+        }
+    });
+    
+    // 实时搜索建议
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const searchTerm = this.value.trim();
+        const suggestionsContainer = document.getElementById('searchSuggestions');
+        
+        if (searchTerm.length < 2) {
+            suggestionsContainer.style.display = 'none';
+            return;
+        }
+        
+        // 生成搜索建议
+        const suggestions = generateSearchSuggestions(searchTerm);
+        
+        if (suggestions.length > 0) {
+            // 显示搜索建议
+            suggestionsContainer.innerHTML = '';
+            suggestions.forEach(suggestion => {
+                const suggestionItem = document.createElement('div');
+                suggestionItem.className = 'suggestion-item';
+                suggestionItem.textContent = suggestion;
+                suggestionItem.addEventListener('click', function() {
+                    // 点击建议项填充搜索框并执行搜索
+                    document.getElementById('searchInput').value = suggestion;
+                    suggestionsContainer.style.display = 'none';
+                    performSearch();
+                });
+                suggestionsContainer.appendChild(suggestionItem);
+            });
+            suggestionsContainer.style.display = 'block';
+        } else {
+            suggestionsContainer.style.display = 'none';
+        }
+    });
+    
+    // 点击页面其他地方关闭搜索建议
+    document.addEventListener('click', function(e) {
+        const suggestionsContainer = document.getElementById('searchSuggestions');
+        const searchInput = document.getElementById('searchInput');
+        
+        if (!suggestionsContainer.contains(e.target) && e.target !== searchInput) {
+            suggestionsContainer.style.display = 'none';
+        }
+    });
+    
+    // 生成搜索建议
+    function generateSearchSuggestions(searchTerm) {
+        const lowerCaseTerm = searchTerm.toLowerCase();
+        const uniqueSuggestions = new Set();
+        
+        // 从商品名称和分类中提取建议
+        products.forEach(product => {
+            if (product.name.toLowerCase().includes(lowerCaseTerm)) {
+                uniqueSuggestions.add(product.name);
+            }
+            if (product.category.toLowerCase().includes(lowerCaseTerm)) {
+                uniqueSuggestions.add(product.category);
+            }
+        });
+        
+        // 限制建议数量
+        return Array.from(uniqueSuggestions).slice(0, 5);
+    }
+    </script>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star咖啡商城 - 商品分类</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="top-shortcut">
+    <div class="shortcut-container">
+        <ul class="shortcut-links">
+            <li id="loginbar">
+                <span id="loginuser">您好，请</span>
+                <a href="index.html">[登录]</a>
+                <a href="register.html">[免费注册]</a>
+            </li>
+            <li><a href="shopping-cart.html">购物车</a></li>
+            <li><a href="#">客户服务</a></li>
+        </ul>
+    </div>
+</div>
+
+<nav class="navbar">
+    <div class="nav-container">
+        <a href="main.html" class="logo">Star<span>咖啡商城</span></a>
+        <ul class="nav-menu">
+            <li><a href="main.html">首页</a></li>
+            <li class="active"><a href="products.html">商品分类</a></li>
+            <li><a href="shopping-cart.html">购物车</a></li>
+            <li><a href="about.html">关于我们</a></li>
+        </ul>
+        <div class="user-actions" id="userActions"></div>
+    </div>
+</nav>
+
+<div class="search-container">
+    <div class="search-content">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="搜索咖啡...">
+            <button onclick="window.searchProducts && window.searchProducts()">搜索</button>
+        </div>
+        <div>
+            <a href="shopping-cart.html" style="text-decoration: none; color: #6f4e37; font-weight: bold;">
+                🛒 购物车 <span id="cartCount" style="color: #e74c3c;">0</span>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="products-container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="category-sidebar">
+                <h3 class="category-title">商品分类</h3>
+                <ul class="category-list" id="categoryList">
+                </ul>
+            </div>
+
+            <div class="filter-sidebar">
+                <h3 class="filter-title">价格筛选</h3>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-price="all" onclick="filterPrice('all')">全部</button>
+                    <button class="filter-btn" data-price="0-50" onclick="filterPrice('0-50')">¥0-50</button>
+                    <button class="filter-btn" data-price="50-100" onclick="filterPrice('50-100')">¥50-100</button>
+                    <button class="filter-btn" data-price="200+" onclick="filterPrice('200+')">¥200+</button>
+                </div>
+            </div>
+
+            <div class="filter-sidebar">
+                <h3 class="filter-title">品牌筛选</h3>
+                <div class="filter-options">
+                    <button class="filter-btn active" data-brand="all" onclick="filterBrand('all')">全部</button>
+                    <button class="filter-btn" data-brand="g7" onclick="filterBrand('g7')">中原G7</button>
+                    <button class="filter-btn" data-brand="nescafe" onclick="filterBrand('nescafe')">雀巢</button>
+                    <button class="filter-btn" data-brand="other" onclick="filterBrand('other')">其他</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-9">
+            <div class="products-header">
+                <div class="products-count">共 <span id="productCount">0</span> 件商品</div>
+                <div>
+                    <select class="form-select form-select-sm" id="sortSelect" onchange="handleSort()">
+                        <option value="default">默认排序</option>
+                        <option value="sales">销量排序</option>
+                        <option value="price-asc">价格低到高</option>
+                        <option value="price-desc">价格高到低</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="products-grid" id="productsGrid">
+            </div>
+
+            <div class="pagination" id="pagination" style="margin-top: 40px; display: flex; justify-content: center; gap: 10px;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-content">
+        <p style="text-align: center;">Star咖啡商城 - 品味每一刻的香醇</p>
+        <div class="copyright">© 2025 Star咖啡商城 版权所有</div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/products.js"></script>
+<script src="js/cart.js"></script>
+<script src="js/products-ui.js"></script> </body>
+</html>

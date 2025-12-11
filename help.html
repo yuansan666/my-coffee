@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star咖啡商城 - 帮助中心</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- 自定义CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* 帮助中心页面特定样式 */
+        .help-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .help-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .help-title {
+            color: #6f4e37;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .help-subtitle {
+            color: #666;
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .help-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: #6f4e37;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d4a762;
+        }
+        
+        .section-subtitle {
+            color: #8b6b4d;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 30px 0 15px 0;
+        }
+        
+        .section-content {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* FAQ折叠面板样式 */
+        .accordion {
+            margin-top: 20px;
+        }
+        
+        .accordion-item {
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .accordion-header {
+            background: linear-gradient(135deg, rgba(111, 78, 55, 0.05), rgba(212, 167, 98, 0.05));
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .accordion-header:hover {
+            background: linear-gradient(135deg, rgba(111, 78, 55, 0.1), rgba(212, 167, 98, 0.1));
+        }
+        
+        .accordion-button {
+            background: transparent;
+            border: none;
+            width: 100%;
+            text-align: left;
+            font-size: 18px;
+            font-weight: bold;
+            color: #6f4e37;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .accordion-button:focus {
+            outline: none;
+            box-shadow: none;
+        }
+        
+        .accordion-button::after {
+            content: "+";
+            font-size: 24px;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+        
+        .accordion-button.active::after {
+            transform: rotate(45deg);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .accordion-content.show {
+            max-height: 500px;
+        }
+        
+        .accordion-body {
+            padding: 20px;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* 帮助分类卡片 */
+        .help-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .category-card {
+            background: linear-gradient(135deg, rgba(111, 78, 55, 0.05), rgba(212, 167, 98, 0.05));
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, rgba(111, 78, 55, 0.1), rgba(212, 167, 98, 0.1));
+        }
+        
+        .category-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #d4a762;
+        }
+        
+        .category-title {
+            color: #6f4e37;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .category-description {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .contact-support {
+            background: linear-gradient(135deg, #6f4e37, #d4a762);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .contact-support h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-support p {
+            margin-bottom: 25px;
+            font-size: 18px;
+        }
+        
+        .contact-button {
+            display: inline-block;
+            background: white;
+            color: #6f4e37;
+            padding: 12px 30px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        
+        .contact-button:hover {
+            background: #f8f9fa;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部快捷栏 -->
+    <div class="top-shortcut">
+        <div class="shortcut-container">
+            <ul class="shortcut-links">
+                <li id="loginbar">
+                    <span id="loginuser">您好，请</span>
+                    <a href="index.html">[登录]</a>
+                    <a href="register.html">[免费注册]</a>
+                </li>
+                <li><a href="shopping-cart.html">购物车</a></li>
+                <li><a href="customer-service.html">客户服务</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="main.html" class="logo">Star<span>咖啡商城</span></a>
+            
+            <ul class="nav-menu">
+                <li><a href="main.html">首页</a></li>
+                <li><a href="products.html">商品分类</a></li>
+                <li><a href="shopping-cart.html">购物车</a></li>
+                <li><a href="about.html">关于我们</a></li>
+            </ul>
+            
+            <div class="user-actions" id="userActions">
+                <!-- 这里的内容将由JavaScript动态生成 -->
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 搜索栏 -->
+    <div class="search-container">
+        <div class="search-content">
+            <div style="flex: 1;">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索咖啡、咖啡豆、咖啡机...">
+                    <button onclick="searchProducts()">搜索</button>
+                </div>
+            </div>
+            <div>
+                <a href="shopping-cart.html" style="text-decoration: none; color: #6f4e37; font-weight: bold;">
+                    🛒 购物车 <span id="cartCount" style="color: #e74c3c;">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 帮助中心内容 -->
+    <div class="help-container">
+        <div class="help-header">
+            <h1 class="help-title">帮助中心</h1>
+            <p class="help-subtitle">我们致力于为您提供最优质的购物体验，如有任何问题，请查阅以下帮助信息</p>
+        </div>
+        
+        <!-- 帮助分类 -->
+        <div class="help-section">
+            <h2 class="section-title">快速导航</h2>
+            <div class="help-categories">
+                <div class="category-card">
+                    <div class="category-icon">🛒</div>
+                    <h3 class="category-title">购物指南</h3>
+                    <p class="category-description">了解如何在我们的网站上轻松购物</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">💳</div>
+                    <h3 class="category-title">支付方式</h3>
+                    <p class="category-description">查看我们支持的各种支付方式</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🚚</div>
+                    <h3 class="category-title">物流配送</h3>
+                    <p class="category-description">了解我们的配送范围和配送时间</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">🔄</div>
+                    <h3 class="category-title">退换货</h3>
+                    <p class="category-description">查看我们的退换货政策和流程</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">❓</div>
+                    <h3 class="category-title">常见问题</h3>
+                    <p class="category-description">查找常见问题的解答</p>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">👥</div>
+                    <h3 class="category-title">客户服务</h3>
+                    <p class="category-description">联系我们获取更多帮助</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 常见问题FAQ -->
+        <div class="help-section">
+            <h2 class="section-title">常见问题</h2>
+            <div class="accordion">
+                <!-- FAQ项目1 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <button class="accordion-button">如何注册账号？</button>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>您可以通过以下步骤注册账号：</p>
+                            <ol style="margin-left: 20px; margin-top: 10px;">
+                                <li>点击页面右上角的"免费注册"按钮</li>
+                                <li>填写您的邮箱地址、设置密码</li>
+                                <li>点击"注册"按钮完成注册</li>
+                                <li>注册成功后，您将收到一封确认邮件</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ项目2 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <button class="accordion-button">如何重置密码？</button>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>如果您忘记了密码，可以通过以下步骤重置：</p>
+                            <ol style="margin-left: 20px; margin-top: 10px;">
+                                <li>点击登录页面的"忘记密码"链接</li>
+                                <li>输入您的注册邮箱</li>
+                                <li>点击"发送重置链接"按钮</li>
+                                <li>查收邮件并点击链接重置密码</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ项目3 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <button class="accordion-button">如何添加商品到购物车？</button>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>您可以通过以下步骤添加商品到购物车：</p>
+                            <ol style="margin-left: 20px; margin-top: 10px;">
+                                <li>在商品页面浏览您感兴趣的商品</li>
+                                <li>点击商品卡片上的"加入购物车"按钮</li>
+                                <li>商品将自动添加到购物车中</li>
+                                <li>您可以在页面右上角查看购物车中的商品数量</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ项目4 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <button class="accordion-button">如何修改订单信息？</button>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>订单提交后，您可以在"我的订单"页面查看订单详情。如果您需要修改订单信息（如收货地址、联系电话等），请在订单发货前联系我们的客服人员。一旦订单已发货，将无法修改订单信息。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ项目5 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <button class="accordion-button">如何查询订单状态？</button>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>您可以通过以下步骤查询订单状态：</p>
+                            <ol style="margin-left: 20px; margin-top: 10px;">
+                                <li>登录您的账号</li>
+                                <li>进入"我的订单"页面</li>
+                                <li>在订单列表中找到您需要查询的订单</li>
+                                <li>点击订单详情，查看最新的订单状态</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ项目6 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <button class="accordion-button">支持哪些支付方式？</button>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>我们支持以下支付方式：</p>
+                            <ul style="margin-left: 20px; margin-top: 10px;">
+                                <li>微信支付</li>
+                                <li>支付宝</li>
+                                <li>银联支付</li>
+                                <li>信用卡支付</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ项目7 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <button class="accordion-button">配送范围是怎样的？</button>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>我们目前支持全国范围内的配送服务。部分偏远地区可能需要额外的配送时间和费用。您可以在提交订单时查看具体的配送信息。</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ项目8 -->
+                <div class="accordion-item">
+                    <div class="accordion-header">
+                        <button class="accordion-button">如何申请退换货？</button>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-body">
+                            <p>如果您需要退换货，可以通过以下步骤申请：</p>
+                            <ol style="margin-left: 20px; margin-top: 10px;">
+                                <li>登录您的账号</li>
+                                <li>进入"我的订单"页面</li>
+                                <li>找到需要退换货的订单，点击"申请退换货"按钮</li>
+                                <li>填写退换货原因和相关信息</li>
+                                <li>提交申请后，我们的客服人员将尽快与您联系</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 购物指南 -->
+        <div class="help-section">
+            <h2 class="section-title">购物指南</h2>
+            <div class="section-content">
+                <h3 class="section-subtitle">1. 浏览商品</h3>
+                <p>您可以通过以下方式浏览商品：</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>点击导航栏的"商品分类"查看不同类别的商品</li>
+                    <li>在搜索框中输入关键词搜索您感兴趣的商品</li>
+                    <li>浏览首页的推荐商品和促销活动</li>
+                </ul>
+                
+                <h3 class="section-subtitle">2. 商品详情</h3>
+                <p>点击商品卡片进入商品详情页面，您可以查看：</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>商品的详细描述和参数</li>
+                    <li>商品的价格和库存信息</li>
+                    <li>其他用户的评价和评分</li>
+                </ul>
+                
+                <h3 class="section-subtitle">3. 添加到购物车</h3>
+                <p>选择您需要的商品规格和数量，点击"加入购物车"按钮，商品将被添加到您的购物车中。</p>
+                
+                <h3 class="section-subtitle">4. 结算订单</h3>
+                <p>点击页面右上角的购物车图标，进入购物车页面：</p>
+                <ul style="margin-left: 20px; margin-top: 10px;">
+                    <li>确认商品信息和数量</li>
+                    <li>选择配送地址和支付方式</li>
+                    <li>点击"提交订单"按钮完成购买</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- 联系客服 -->
+        <div class="help-section">
+            <h2 class="section-title">仍有问题？</h2>
+            <div class="contact-support">
+                <h3>需要更多帮助？</h3>
+                <p>如果您在使用过程中遇到任何问题，欢迎随时联系我们的客服团队</p>
+                <a href="contact.html" class="contact-button">联系客服</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <p style="text-align: center; font-size: 20px; margin-bottom: 20px;">Star咖啡商城 - 品味每一刻的香醇</p>
+            <div class="footer-links">
+                <a href="main.html">首页</a>
+                <a href="products.html">商品分类</a>
+                <a href="about.html">关于我们</a>
+                <a href="contact.html">联系我们</a>
+                <a href="privacy.html">隐私政策</a>
+                <a href="terms.html">服务条款</a>
+                <a href="help.html">帮助中心</a>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Star咖啡商城 版权所有 | 咖啡爱好者的首选购物平台</p>
+                <p style="font-size: 12px; margin-top: 10px;">本网站仅用于学习展示，非实际电商平台</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 自定义JS -->
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        // FAQ折叠面板功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const accordionButtons = document.querySelectorAll('.accordion-button');
+            
+            accordionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                    const content = this.closest('.accordion-item').querySelector('.accordion-content');
+                    content.classList.toggle('show');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

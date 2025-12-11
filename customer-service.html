@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star咖啡商城 - 客户服务</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- 自定义CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        /* 客户服务页面特定样式 */
+        .service-container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        
+        .service-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .service-title {
+            color: #6f4e37;
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .service-subtitle {
+            color: #666;
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .service-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            color: #6f4e37;
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d4a762;
+        }
+        
+        .section-subtitle {
+            color: #8b6b4d;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 30px 0 15px 0;
+        }
+        
+        .section-content {
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        /* 服务渠道卡片 */
+        .service-channels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .channel-card {
+            background: linear-gradient(135deg, rgba(111, 78, 55, 0.05), rgba(212, 167, 98, 0.05));
+            padding: 35px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .channel-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+            background: linear-gradient(135deg, rgba(111, 78, 55, 0.1), rgba(212, 167, 98, 0.1));
+        }
+        
+        .channel-icon {
+            font-size: 56px;
+            margin-bottom: 25px;
+            color: #d4a762;
+        }
+        
+        .channel-title {
+            color: #6f4e37;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+        
+        .channel-info {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .channel-contact {
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #6f4e37;
+        }
+        
+        /* 表单样式 */
+        .feedback-form {
+            margin-top: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 10px;
+            color: #6f4e37;
+            font-weight: bold;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #d4a762;
+            box-shadow: 0 0 0 3px rgba(212, 167, 98, 0.1);
+        }
+        
+        .form-control-textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+        
+        .submit-button {
+            background: linear-gradient(135deg, #6f4e37, #d4a762);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(111, 78, 55, 0.3);
+        }
+        
+        /* 订单查询 */
+        .order-search {
+            background: linear-gradient(135deg, rgba(111, 78, 55, 0.05), rgba(212, 167, 98, 0.05));
+            padding: 30px;
+            border-radius: 15px;
+            margin-top: 30px;
+        }
+        
+        .order-search-form {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .order-search-input {
+            flex: 1;
+            max-width: 400px;
+        }
+        
+        /* 服务时间 */
+        .service-time {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #d4a762;
+            margin-top: 20px;
+        }
+        
+        .service-time p {
+            margin: 0;
+            color: #666;
+            font-size: 16px;
+        }
+        
+        /* 常见问题快速链接 */
+        .quick-faq {
+            margin-top: 30px;
+        }
+        
+        .faq-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .faq-link {
+            display: block;
+            background: linear-gradient(135deg, rgba(111, 78, 55, 0.05), rgba(212, 167, 98, 0.05));
+            padding: 15px;
+            border-radius: 8px;
+            color: #6f4e37;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+        }
+        
+        .faq-link:hover {
+            background: linear-gradient(135deg, rgba(111, 78, 55, 0.1), rgba(212, 167, 98, 0.1));
+            transform: translateY(-2px);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <!-- 顶部快捷栏 -->
+    <div class="top-shortcut">
+        <div class="shortcut-container">
+            <ul class="shortcut-links">
+                <li id="loginbar">
+                    <span id="loginuser">您好，请</span>
+                    <a href="index.html">[登录]</a>
+                    <a href="register.html">[免费注册]</a>
+                </li>
+                <li><a href="shopping-cart.html">购物车</a></li>
+                <li><a href="customer-service.html">客户服务</a></li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="main.html" class="logo">Star<span>咖啡商城</span></a>
+            
+            <ul class="nav-menu">
+                <li><a href="main.html">首页</a></li>
+                <li><a href="products.html">商品分类</a></li>
+                <li><a href="goods-detail.html">热卖商品</a></li>
+                <li><a href="shopping-cart.html">购物车</a></li>
+                <li><a href="about.html">关于我们</a></li>
+            </ul>
+            
+            <div class="user-actions" id="userActions">
+                <!-- 这里的内容将由JavaScript动态生成 -->
+            </div>
+        </div>
+    </nav>
+    
+    <!-- 搜索栏 -->
+    <div class="search-container">
+        <div class="search-content">
+            <div style="flex: 1;">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="搜索咖啡、咖啡豆、咖啡机...">
+                    <button onclick="searchProducts()">搜索</button>
+                </div>
+            </div>
+            <div>
+                <a href="shopping-cart.html" style="text-decoration: none; color: #6f4e37; font-weight: bold;">
+                    🛒 购物车 <span id="cartCount" style="color: #e74c3c;">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 客户服务内容 -->
+    <div class="service-container">
+        <div class="service-header">
+            <h1 class="service-title">客户服务</h1>
+            <p class="service-subtitle">我们致力于为您提供专业、高效的客户服务，解决您在购物过程中遇到的任何问题</p>
+        </div>
+        
+        <!-- 服务渠道 -->
+        <div class="service-section">
+            <h2 class="section-title">服务渠道</h2>
+            <div class="service-channels">
+                <!-- 在线客服 -->
+                <div class="channel-card">
+                    <div class="channel-icon">💬</div>
+                    <h3 class="channel-title">在线客服</h3>
+                    <div class="channel-info">
+                        <p>通过在线客服系统与我们的客服人员实时沟通，解决您的问题</p>
+                        <p class="channel-contact">点击下方按钮开始聊天</p>
+                    </div>
+                    <button class="submit-button" style="margin-top: 20px; font-size: 16px; padding: 12px 30px;">立即咨询</button>
+                </div>
+                
+                <!-- 电话客服 -->
+                <div class="channel-card">
+                    <div class="channel-icon">📞</div>
+                    <h3 class="channel-title">电话客服</h3>
+                    <div class="channel-info">
+                        <p>拨打我们的客服热线，专业客服为您解答问题</p>
+                        <p class="channel-contact">400-123-4567</p>
+                    </div>
+                    <div class="service-time">
+                        <p><strong>服务时间：</strong>周一至周日 9:00-21:00</p>
+                    </div>
+                </div>
+                
+                <!-- 邮箱客服 -->
+                <div class="channel-card">
+                    <div class="channel-icon">📧</div>
+                    <h3 class="channel-title">邮箱客服</h3>
+                    <div class="channel-info">
+                        <p>发送邮件至我们的客服邮箱，我们将在24小时内回复</p>
+                        <p class="channel-contact">service@starcoffee.com</p>
+                    </div>
+                    <div class="service-time">
+                        <p><strong>回复时间：</strong>工作日 24小时内</p>
+                    </div>
+                </div>
+                
+                <!-- 社交媒体 -->
+                <div class="channel-card">
+                    <div class="channel-icon">📱</div>
+                    <h3 class="channel-title">社交媒体</h3>
+                    <div class="channel-info">
+                        <p>关注我们的社交媒体账号，获取最新活动信息和客服支持</p>
+                        <p class="channel-contact">
+                            <span style="margin-right: 20px;">微信：Star咖啡商城</span>
+                            <span>微博：@Star咖啡商城</span>
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- 门店服务 -->
+                <div class="channel-card">
+                    <div class="channel-icon">🏪</div>
+                    <h3 class="channel-title">门店服务</h3>
+                    <div class="channel-info">
+                        <p>前往我们的线下门店，享受面对面的专业服务</p>
+                        <p class="channel-contact">点击查看附近门店</p>
+                    </div>
+                    <button class="submit-button" style="margin-top: 20px; font-size: 16px; padding: 12px 30px;">门店查询</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 订单查询 -->
+        <div class="service-section">
+            <h2 class="section-title">订单查询</h2>
+            <div class="section-content">
+                <p>您可以通过订单号或手机号查询您的订单状态和物流信息：</p>
+                <div class="order-search">
+                    <form class="order-search-form">
+                        <div class="form-group order-search-input">
+                            <label class="form-label">订单号</label>
+                            <input type="text" class="form-control" placeholder="请输入您的订单号">
+                        </div>
+                        <div class="form-group order-search-input">
+                            <label class="form-label">手机号</label>
+                            <input type="text" class="form-control" placeholder="请输入您的手机号">
+                        </div>
+                        <button type="submit" class="submit-button" style="align-self: flex-end;">查询订单</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 投诉建议 -->
+        <div class="service-section">
+            <h2 class="section-title">投诉与建议</h2>
+            <div class="section-content">
+                <p>如果您对我们的商品或服务有任何意见或建议，欢迎通过以下表单反馈给我们，我们将认真对待每一条反馈：</p>
+                <form class="feedback-form">
+                    <div class="form-group">
+                        <label class="form-label">姓名</label>
+                        <input type="text" class="form-control" placeholder="请输入您的姓名">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">联系方式</label>
+                        <input type="text" class="form-control" placeholder="请输入您的手机号或邮箱">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">订单号（如有）</label>
+                        <input type="text" class="form-control" placeholder="请输入相关订单号（可选）">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">反馈类型</label>
+                        <select class="form-control">
+                            <option value="">请选择反馈类型</option>
+                            <option value="suggestion">建议</option>
+                            <option value="complaint">投诉</option>
+                            <option value="question">咨询</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">反馈内容</label>
+                        <textarea class="form-control form-control-textarea" placeholder="请详细描述您的问题或建议..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">上传图片（可选）</label>
+                        <input type="file" class="form-control" multiple>
+                    </div>
+                    <button type="submit" class="submit-button">提交反馈</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- 常见问题快速链接 -->
+        <div class="service-section">
+            <h2 class="section-title">常见问题</h2>
+            <div class="section-content">
+                <p>查看常见问题解答，快速解决您的疑问：</p>
+                <div class="quick-faq">
+                    <a href="help.html#shipping" class="faq-link">配送和物流相关问题</a>
+                    <a href="help.html#payment" class="faq-link">支付方式相关问题</a>
+                    <a href="help.html#return" class="faq-link">退换货相关问题</a>
+                    <a href="help.html#account" class="faq-link">账号和登录相关问题</a>
+                    <a href="help.html#product" class="faq-link">商品相关问题</a>
+                    <a href="help.html#order" class="faq-link">订单相关问题</a>
+                </div>
+                <p style="margin-top: 20px;">如果您的问题没有在常见问题中找到答案，欢迎通过以上服务渠道与我们联系。</p>
+            </div>
+        </div>
+        
+        <!-- 服务承诺 -->
+        <div class="service-section">
+            <h2 class="section-title">服务承诺</h2>
+            <div class="section-content">
+                <h3 class="section-subtitle">1. 7天无理由退换货</h3>
+                <p>我们承诺，在商品未使用、包装完好的情况下，支持7天无理由退换货，让您购物无忧。</p>
+                
+                <h3 class="section-subtitle">2. 正品保证</h3>
+                <p>我们所有商品均为正品，假一赔十，为您提供品质保障。</p>
+                
+                <h3 class="section-subtitle">3. 快速配送</h3>
+                <p>我们与多家物流合作伙伴合作，确保您的商品能够及时送达。</p>
+                
+                <h3 class="section-subtitle">4. 专业客服</h3>
+                <p>我们的客服团队经过专业培训，为您提供高效、专业的服务。</p>
+                
+                <h3 class="section-subtitle">5. 隐私保护</h3>
+                <p>我们严格保护您的个人信息安全，不会泄露您的任何隐私。</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <p style="text-align: center; font-size: 20px; margin-bottom: 20px;">Star咖啡商城 - 品味每一刻的香醇</p>
+            <div class="footer-links">
+                <a href="main.html">首页</a>
+                <a href="products.html">商品分类</a>
+                <a href="about.html">关于我们</a>
+                <a href="contact.html">联系我们</a>
+                <a href="privacy.html">隐私政策</a>
+                <a href="terms.html">服务条款</a>
+                <a href="help.html">帮助中心</a>
+            </div>
+            <div class="copyright">
+                <p>© 2025 Star咖啡商城 版权所有 | 咖啡爱好者的首选购物平台</p>
+                <p style="font-size: 12px; margin-top: 10px;">本网站仅用于学习展示，非实际电商平台</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Bootstrap 5 JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- 自定义JS -->
+    <script src="js/auth.js"></script>
+    <script src="js/cart.js"></script>
+    <script>
+        // 表单提交处理
+        document.addEventListener('DOMContentLoaded', function() {
+            const forms = document.querySelectorAll('form');
+            
+            forms.forEach(form => {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // 这里可以添加表单验证和提交逻辑
+                    alert('提交成功！我们将尽快处理您的请求。');
+                    form.reset();
+                });
+            });
+        });
+    </script>
+</body>
+</html>

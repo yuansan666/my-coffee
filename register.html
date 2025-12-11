@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Star咖啡 - 注册</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+    <div class="register-container">
+        <div class="coffee-icon">☕</div>
+        <h1 class="logo">Star<span>咖啡商城</span></h1>
+        <p style="text-align: center; color: #666; margin-bottom: 30px;">加入Star咖啡商城，开启您的咖啡购物之旅</p>
+        
+        <form id="registerForm" class="register-form">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="firstName">名字</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="请输入名字" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">姓氏</label>
+                    <input type="text" id="lastName" name="lastName" placeholder="请输入姓氏" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="username">用户名</label>
+                <input type="text" id="username" name="username" placeholder="请输入用户名" required>
+                <div class="requirements">4-16个字符，只能包含字母、数字和下划线</div>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">电子邮箱</label>
+                <input type="email" id="email" name="email" placeholder="请输入电子邮箱" required>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="password">密码</label>
+                    <input type="password" id="password" name="password" placeholder="请输入密码" required>
+                    <div class="requirements">至少8个字符，包含字母和数字</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">确认密码</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" placeholder="请再次输入密码" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>
+                    <input type="checkbox" id="agreeTerms" required>
+                    我同意Star咖啡商城的<a href="#" style="color: #6f4e37;">服务条款</a>和<a href="#" style="color: #6f4e37;">隐私政策</a>
+                </label>
+            </div>
+            
+            <button type="button" class="btn-register" onclick="register()">注册</button>
+        </form>
+        
+        <div class="login-link">
+            已有账户？<a href="index.html">立即登录</a>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/register.js"></script>
+</body>
+</html>
